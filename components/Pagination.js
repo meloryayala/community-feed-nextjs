@@ -9,9 +9,9 @@ const PaginationContainer = styled.div`
 const PaginationLink = styled.a`
 padding: 2%;
   margin: 1%;
-  background-color: ${(props) => !props.disable ? 'orange' : 'lightGray'};
-  pointer-events: ${(props) => !props.disable ? 'all' : 'none'};
-  cursor: ${(props) => !props.disable ? 'pointer' : 'not-allowed'};
+  background-color: ${(props) => !props.disabled ? 'orange' : 'lightGray'};
+  pointer-events: ${(props) => !props.disabled ? 'all' : 'none'};
+  cursor: ${(props) => !props.disabled ? 'pointer' : 'not-allowed'};
   color: white;
   text-decoration: none;
   border-radius: 5px;

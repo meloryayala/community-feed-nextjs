@@ -16,7 +16,7 @@ const CardWrapper = styled.div`
   }
   
   span {
-    color: darkgray;
+    color: black;
   }
 `
 

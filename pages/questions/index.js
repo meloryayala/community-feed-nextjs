@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import Card from "../../components/Card";
 import Link from "next/link";
 import {useRouter} from "next/router";
+import Pagination from "../../components/Pagination";
 
 const QuestionsContainer = styled.div`
   display: flex;
@@ -16,11 +17,12 @@ const CardLink = styled.a`
 `
 
 const Questions = () => {
-    const [loading, setLoading] = useState(true)
-    const [questions, setQuestions] = useState([])
+    const [loading, setLoading] = useState(true);
+    const [questions, setQuestions] = useState([]);
+    const [hasMore, setHasMore] = useState(false);
 
     const router = useRouter()
-    const { page } = router.query
+    const {page} = router.query
 
     useEffect(() => {
         async function fetchData() {
@@ -30,6 +32,7 @@ const Questions = () => {
             if (result) {
                 setQuestions(result.items)
                 setLoading(false)
+                setHasMore(result.has_more)
             }
         }
 
@@ -44,23 +47,26 @@ const Questions = () => {
                 loading
                     ? <span>Loading...</span>
                     : (
-                        <div>
-                            {questions.map(question => (
-                                <Link
-                                    key={question.question_id}
-                                    href={`/questions/${question.question_id}`}
-                                    passHref
-                                >
-                                    <CardLink>
-                                        <Card
-                                            title={question.title}
-                                            answers={question.answer_count}
-                                            views={question.view_count}
-                                        />
-                                    </CardLink>
-                                </Link>
-                            ))}
-                        </div>
+                        <>
+                            <div>
+                                {questions.map(question => (
+                                    <Link
+                                        key={question.question_id}
+                                        href={`/questions/${question.question_id}`}
+                                        passHref
+                                    >
+                                        <CardLink>
+                                            <Card
+                                                title={question.title}
+                                                answers={question.answer_count}
+                                                views={question.view_count}
+                                            />
+                                        </CardLink>
+                                    </Link>
+                                ))}
+                            </div>
+                            <Pagination currentPage={parseInt(page || 1)} hasMore={hasMore}/>
+                        </>
                     )
             }
         </QuestionsContainer>

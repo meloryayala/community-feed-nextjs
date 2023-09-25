@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Card from "../../components/Card";
 import Link from "next/link";
 import Pagination from "../../components/Pagination";
+import Head from "next/head";
 
 const QuestionsContainer = styled.div`
   display: flex;
@@ -16,27 +17,32 @@ const CardLink = styled.a`
 
 const Questions = ({questions, hasMore, page}) => {
     return (
-        <QuestionsContainer>
-            <h2>Questions</h2>
-            <div>
-                {questions.map(question => (
-                    <Link
-                        key={question.question_id}
-                        href={`/questions/${question.question_id}`}
-                        passHref
-                    >
-                        <CardLink>
-                            <Card
-                                title={question.title}
-                                answers={question.answer_count}
-                                views={question.view_count}
-                            />
-                        </CardLink>
-                    </Link>
-                ))}
-            </div>
-            <Pagination currentPage={parseInt(page || 1)} hasMore={hasMore}/>
-        </QuestionsContainer>
+        <>
+            <Head>
+                <title>Questions</title>
+            </Head>
+            <QuestionsContainer>
+                <h2>Questions</h2>
+                <div>
+                    {questions.map(question => (
+                        <Link
+                            key={question.question_id}
+                            href={`/questions/${question.question_id}`}
+                            passHref
+                        >
+                            <CardLink>
+                                <Card
+                                    title={question.title}
+                                    answers={question.answer_count}
+                                    views={question.view_count}
+                                />
+                            </CardLink>
+                        </Link>
+                    ))}
+                </div>
+                <Pagination currentPage={parseInt(page || 1)} hasMore={hasMore}/>
+            </QuestionsContainer>
+        </>
     )
 }
 
